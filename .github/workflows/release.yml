@@ -39,13 +39,10 @@ jobs:
 
       - run: |
           pwd
-          ls -l /home/runner/work/prometheus-exporter-plugin-for-opensearch/prometheus-exporter-plugin-for-opensearch/build/distributions/prometheus-exporter-2.18.0.0.zip || true
-          ls -l prometheus-exporter-plugin-for-opensearch/prometheus-exporter-plugin-for-opensearch/build/distributions/prometheus-exporter-2.18.0.0.zip || true
-          ls -l prometheus-exporter-plugin-for-opensearch/build/distributions/prometheus-exporter-2.18.0.0.zip || true
-          ls -l build/distributions/prometheus-exporter-2.18.0.0.zip || true
-          ls -l distributions/prometheus-exporter-2.18.0.0.zip || true
+          ls -l build/distributions/prometheus-exporter-${{ env.TAG }}.zip || true
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
           name: Release ${{ env.TAG }}
           tag_name: 2.18.0.0
+          files: build/distributions/prometheus-exporter-${{ env.TAG }}.zip
