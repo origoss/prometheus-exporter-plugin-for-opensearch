@@ -37,12 +37,9 @@ jobs:
         run: |
             ./gradlew --info build
 
-      - run: |
-          pwd
-          ls -l build/distributions/prometheus-exporter-${{ env.TAG }}.zip || true
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
           name: Release ${{ env.TAG }}
-          tag_name: 2.18.0.0
+          tag_name: ${{ env.TAG }}
           files: build/distributions/prometheus-exporter-${{ env.TAG }}.zip
