@@ -37,10 +37,15 @@ jobs:
         run: |
             ./gradlew --info build
 
-      - name: Create a Release
-        uses: elgohr/Github-Release-Action@v5
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: |
+          pwd
+          ls -l /home/runner/work/prometheus-exporter-plugin-for-opensearch/prometheus-exporter-plugin-for-opensearch/build/distributions/prometheus-exporter-2.18.0.0.zip || true
+          ls -l prometheus-exporter-plugin-for-opensearch/prometheus-exporter-plugin-for-opensearch/build/distributions/prometheus-exporter-2.18.0.0.zip || true
+          ls -l prometheus-exporter-plugin-for-opensearch/build/distributions/prometheus-exporter-2.18.0.0.zip || true
+          ls -l build/distributions/prometheus-exporter-2.18.0.0.zip || true
+          ls -l distributions/prometheus-exporter-2.18.0.0.zip || true
+      - name: Release
+        uses: softprops/action-gh-release@v2
         with:
-          title: Release ${TAG}
-          tag: 2.18.0.0
+          name: Release ${{ env.TAG }}
+          tag_name: 2.18.0.0
