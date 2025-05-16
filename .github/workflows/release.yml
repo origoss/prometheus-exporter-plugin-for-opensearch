@@ -1,0 +1,43 @@
+name: Publish Release
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  release:
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        java: [17,21]
+    name: Build and Release Plugin
+    runs-on: ${{ matrix.os }}
+
+    permissions:
+      packages: write
+      contents: write
+
+    steps:
+      - name: Print info
+        run: |
+          echo "Ref: ${{ github.ref }}"
+
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK ${{ matrix.java }}
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: ${{ matrix.java }}
+
+      - name: Build and Run Tests
+        run: |
+            ./gradlew --info build
+
+      - name: Create a Release
+        uses: elgohr/Github-Release-Action@v5
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          title: Release 2.18.0.0
+          tag: 2.18.0.0
