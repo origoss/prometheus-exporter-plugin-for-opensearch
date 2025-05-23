@@ -109,6 +109,7 @@ dependencies {
 //    compile "io.prometheus:simpleclient_common:${versions.prometheus}"
     implementation group: 'io.prometheus', name: 'simpleclient', version: '0.16.0'
     implementation group: 'io.prometheus', name: 'simpleclient_common', version: '0.16.0'
+    testImplementation group: 'org.opensearch', name: 'opensearch-agent-bootstrap', version: "${versions.opensearch}"
 }
 
 restResources {
@@ -119,6 +120,7 @@ restResources {
 
 test {
     include '**/*Tests.class'
+    jvmArgs += ["-Dtests.security.manager=false"]
 }
 
 // Print more details if any deprecated APIs are used
@@ -148,6 +150,7 @@ testClusters.all {
 }
 
 integTest {
+    jvmArgs += ["-Dtests.security.manager=false"]
     // The --debug-jvm command-line option makes the cluster debuggable; this makes the tests debuggable
     if (System.getProperty("test.debug") != null) {
         jvmArgs '-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=*:5005'
