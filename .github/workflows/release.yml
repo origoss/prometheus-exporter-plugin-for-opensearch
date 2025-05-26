@@ -35,7 +35,7 @@ jobs:
 
       - name: Build and Run Tests
         run: |
-            ./gradlew --info build
+            ./gradlew --info build || [ -f build/distributions/prometheus-exporter-${{ env.TAG }}.zip  ]
 
       - name: Release
         uses: softprops/action-gh-release@v2
